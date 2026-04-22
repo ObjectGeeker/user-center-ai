@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.object.usercenter.mapper.PermissionMapper">
+
+    <resultMap id="PermissionVOMap" type="com.object.usercenter.model.vo.PermissionVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="permission_key" property="permissionKey"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_delete" property="isDelete"/>
+    </resultMap>
+
+    <sql id="PermissionColumns">
+        p.id            AS id,
+        p.name          AS name,
+        p.description   AS description,
+        p.permission_key AS permission_key,
+        p.create_by     AS create_by,
+        p.create_time   AS create_time,
+        p.update_by     AS update_by,
+        p.update_time   AS update_time,
+        p.is_delete     AS is_delete
+    </sql>
+
+    <select id="selectPermissionsByRoleId" resultMap="PermissionVOMap">
+        SELECT
+        <include refid="PermissionColumns"/>
+        FROM tb_role_permission rp
+        INNER JOIN tb_permission p ON p.id = rp.permission_id AND p.is_delete = 0
+        WHERE rp.is_delete = 0
+          AND rp.role_id = #{roleId}
+    </select>
+
+    <select id="selectPermissionsByRoleKey" resultMap="PermissionVOMap">
+        SELECT
+        <include refid="PermissionColumns"/>
+        FROM tb_role r
+        INNER JOIN tb_role_permission rp ON rp.role_id = r.id AND rp.is_delete = 0
+        INNER JOIN tb_permission p ON p.id = rp.permission_id AND p.is_delete = 0
+        WHERE r.is_delete = 0
+          AND r.role_key = #{roleKey}
+    </select>
+
+    <select id="selectPermissionsByRoleKeys" resultMap="PermissionVOMap">
+        SELECT DISTINCT
+        <include refid="PermissionColumns"/>
+        FROM tb_role r
+        INNER JOIN tb_role_permission rp ON rp.role_id = r.id AND rp.is_delete = 0
+        INNER JOIN tb_permission p ON p.id = rp.permission_id AND p.is_delete = 0
+        WHERE r.is_delete = 0
+          AND r.role_key IN
+          <foreach collection="roleKeys" item="roleKey" open="(" separator="," close=")">
+              #{roleKey}
+          </foreach>
+    </select>
+
+</mapper>

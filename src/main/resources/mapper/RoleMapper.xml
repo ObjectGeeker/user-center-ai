@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.object.usercenter.mapper.RoleMapper">
+
+    <resultMap id="RoleWithPermissionsMap" type="com.object.usercenter.model.vo.RoleVO">
+        <id column="r_id" property="id"/>
+        <result column="r_name" property="name"/>
+        <result column="r_description" property="description"/>
+        <result column="r_role_key" property="roleKey"/>
+        <result column="r_create_by" property="createBy"/>
+        <result column="r_create_time" property="createTime"/>
+        <result column="r_update_by" property="updateBy"/>
+        <result column="r_update_time" property="updateTime"/>
+        <result column="r_is_delete" property="isDelete"/>
+
+        <collection property="permissions" ofType="com.object.usercenter.model.vo.PermissionVO">
+            <id column="p_id" property="id"/>
+            <result column="p_name" property="name"/>
+            <result column="p_description" property="description"/>
+            <result column="p_permission_key" property="permissionKey"/>
+            <result column="p_create_by" property="createBy"/>
+            <result column="p_create_time" property="createTime"/>
+            <result column="p_update_by" property="updateBy"/>
+            <result column="p_update_time" property="updateTime"/>
+            <result column="p_is_delete" property="isDelete"/>
+        </collection>
+    </resultMap>
+
+    <sql id="RoleAndPermissionColumns">
+        r.id            AS r_id,
+        r.name          AS r_name,
+        r.description   AS r_description,
+        r.role_key      AS r_role_key,
+        r.create_by     AS r_create_by,
+        r.create_time   AS r_create_time,
+        r.update_by     AS r_update_by,
+        r.update_time   AS r_update_time,
+        r.is_delete     AS r_is_delete,
+        p.id            AS p_id,
+        p.name          AS p_name,
+        p.description   AS p_description,
+        p.permission_key AS p_permission_key,
+        p.create_by     AS p_create_by,
+        p.create_time   AS p_create_time,
+        p.update_by     AS p_update_by,
+        p.update_time   AS p_update_time,
+        p.is_delete     AS p_is_delete
+    </sql>
+
+    <select id="selectRoleWithPermissionsById" resultMap="RoleWithPermissionsMap">
+        SELECT
+        <include refid="RoleAndPermissionColumns"/>
+        FROM tb_role r
+        LEFT JOIN tb_role_permission rp ON rp.role_id = r.id AND rp.is_delete = 0
+        LEFT JOIN tb_permission p ON p.id = rp.permission_id AND p.is_delete = 0
+        WHERE r.is_delete = 0
+          AND r.id = #{roleId}
+    </select>
+
+    <select id="selectRoleWithPermissionsByKey" resultMap="RoleWithPermissionsMap">
+        SELECT
+        <include refid="RoleAndPermissionColumns"/>
+        FROM tb_role r
+        LEFT JOIN tb_role_permission rp ON rp.role_id = r.id AND rp.is_delete = 0
+        LEFT JOIN tb_permission p ON p.id = rp.permission_id AND p.is_delete = 0
+        WHERE r.is_delete = 0
+          AND r.role_key = #{roleKey}
+    </select>
+
+    <select id="selectAllRolesWithPermissions" resultMap="RoleWithPermissionsMap">
+        SELECT
+        <include refid="RoleAndPermissionColumns"/>
+        FROM tb_role r
+        LEFT JOIN tb_role_permission rp ON rp.role_id = r.id AND rp.is_delete = 0
+        LEFT JOIN tb_permission p ON p.id = rp.permission_id AND p.is_delete = 0
+        WHERE r.is_delete = 0
+        ORDER BY r.create_time ASC
+    </select>
+
+    <select id="selectRolesWithPermissionsByName" resultMap="RoleWithPermissionsMap">
+        SELECT
+        <include refid="RoleAndPermissionColumns"/>
+        FROM tb_role r
+        LEFT JOIN tb_role_permission rp ON rp.role_id = r.id AND rp.is_delete = 0
+        LEFT JOIN tb_permission p ON p.id = rp.permission_id AND p.is_delete = 0
+        WHERE r.is_delete = 0
+          AND r.name = #{name}
+        ORDER BY r.create_time ASC
+    </select>
+
+    <select id="selectRolesWithPermissionsByNames" resultMap="RoleWithPermissionsMap">
+        SELECT
+        <include refid="RoleAndPermissionColumns"/>
+        FROM tb_role r
+        LEFT JOIN tb_role_permission rp ON rp.role_id = r.id AND rp.is_delete = 0
+        LEFT JOIN tb_permission p ON p.id = rp.permission_id AND p.is_delete = 0
+        WHERE r.is_delete = 0
+        <if test="names != null and names.size() > 0">
+          AND r.name IN
+          <foreach collection="names" item="name" open="(" separator="," close=")">
+              #{name}
+          </foreach>
+        </if>
+        <if test="names == null or names.size() == 0">
+          AND 1 = 0
+        </if>
+        ORDER BY r.create_time ASC
+    </select>
+
+</mapper>
