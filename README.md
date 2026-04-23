@@ -30,3 +30,11 @@
 1. 学习Sa-Token的用法
 2. 学习SpringAI框架整合RAG MCP
 3. 学习手搓一个简易ReactAgent
+
+## 项目亮点
+1. 作为统一用户中台，拥有产品级的细粒度权限控制，可控制用户在某一个产品上的某个权限
+2. 深度整合Sa-Token，实践Sa-Token的各种权限管理用法
+3. 引入AI框架，对接OpenAI
+4. 实践function call
+5. 整合text2sql，配合自己的tools，实现自然语言管理用户数据
+6. 手搓简易的ReactAgent
