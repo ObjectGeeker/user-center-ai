@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.object.usercenter.mapper.RolePermissionMapper">
+<mapper namespace="com.object.usercenter.domain.security.repository.RolePermissionMapper">
 
-    <resultMap id="RolePermissionVOMap" type="com.object.usercenter.model.vo.RolePermissionVO">
+    <resultMap id="RolePermissionVOMap" type="com.object.usercenter.domain.security.model.vo.RolePermissionVO">
         <id column="id" property="id"/>
         <result column="create_by" property="createBy"/>
         <result column="create_time" property="createTime"/>

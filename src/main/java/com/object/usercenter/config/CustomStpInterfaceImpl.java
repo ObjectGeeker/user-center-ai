@@ -4,11 +4,11 @@ import cn.dev33.satoken.stp.StpInterface;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import com.object.usercenter.mapper.RoleMapper;
-import com.object.usercenter.model.po.UserPO;
-import com.object.usercenter.model.vo.PermissionVO;
-import com.object.usercenter.model.vo.RoleVO;
-import com.object.usercenter.service.IUserService;
+import com.object.usercenter.domain.security.repository.RoleMapper;
+import com.object.usercenter.domain.security.model.po.UserPO;
+import com.object.usercenter.domain.security.model.vo.PermissionVO;
+import com.object.usercenter.domain.security.model.vo.RoleVO;
+import com.object.usercenter.domain.user.service.IUserService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.object.usercenter.mapper.RoleMapper">
+<mapper namespace="com.object.usercenter.domain.security.repository.RoleMapper">
 
-    <resultMap id="RoleWithPermissionsMap" type="com.object.usercenter.model.vo.RoleVO">
+    <resultMap id="RoleWithPermissionsMap" type="com.object.usercenter.domain.security.model.vo.RoleVO">
         <id column="r_id" property="id"/>
         <result column="r_name" property="name"/>
         <result column="r_description" property="description"/>
@@ -14,7 +14,7 @@
         <result column="r_update_time" property="updateTime"/>
         <result column="r_is_delete" property="isDelete"/>
 
-        <collection property="permissions" ofType="com.object.usercenter.model.vo.PermissionVO">
+        <collection property="permissions" ofType="com.object.usercenter.domain.security.model.vo.PermissionVO">
             <id column="p_id" property="id"/>
             <result column="p_name" property="name"/>
             <result column="p_description" property="description"/>

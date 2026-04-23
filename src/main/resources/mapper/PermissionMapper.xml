@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.object.usercenter.mapper.PermissionMapper">
+<mapper namespace="com.object.usercenter.domain.security.repository.PermissionMapper">
 
-    <resultMap id="PermissionVOMap" type="com.object.usercenter.model.vo.PermissionVO">
+    <resultMap id="PermissionVOMap" type="com.object.usercenter.domain.security.model.vo.PermissionVO">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="description" property="description"/>
