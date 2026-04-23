@@ -75,6 +75,15 @@
         LEFT JOIN tb_role_permission rp ON rp.role_id = r.id AND rp.is_delete = 0
         LEFT JOIN tb_permission p ON p.id = rp.permission_id AND p.is_delete = 0
         WHERE r.is_delete = 0
+        <if test="request.name != null and request.name != ''">
+            and r.name like concat('%', #{request.name}, '%')
+        </if>
+        <if test="request.description != null and request.description != ''">
+            and r.description like concat('%', #{request.description}, '%')
+        </if>
+        <if test="request.roleKey != null and request.roleKey != ''">
+            and r.role_key = #{request.roleKey}
+        </if>
         ORDER BY r.create_time ASC
     </select>
 
@@ -89,20 +98,20 @@
         ORDER BY r.create_time ASC
     </select>
 
-    <select id="selectRolesWithPermissionsByNames" resultMap="RoleWithPermissionsMap">
+    <select id="selectRolesWithPermissionsByRoleKeys" resultMap="RoleWithPermissionsMap">
         SELECT
         <include refid="RoleAndPermissionColumns"/>
         FROM tb_role r
         LEFT JOIN tb_role_permission rp ON rp.role_id = r.id AND rp.is_delete = 0
         LEFT JOIN tb_permission p ON p.id = rp.permission_id AND p.is_delete = 0
         WHERE r.is_delete = 0
-        <if test="names != null and names.size() > 0">
-          AND r.name IN
-          <foreach collection="names" item="name" open="(" separator="," close=")">
+        <if test="roleKeys != null and roleKeys.size() > 0">
+          AND r.role_key IN
+          <foreach collection="roleKeys" item="name" open="(" separator="," close=")">
               #{name}
           </foreach>
         </if>
-        <if test="names == null or names.size() == 0">
+        <if test="roleKeys == null or roleKeys.size() == 0">
           AND 1 = 0
         </if>
         ORDER BY r.create_time ASC

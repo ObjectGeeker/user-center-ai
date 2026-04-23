@@ -1,7 +1,9 @@
 package com.object.usercenter.domain.security.repository;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.object.usercenter.domain.security.model.po.PermissionPO;
+import com.object.usercenter.domain.security.model.request.PermissionQueryRequest;
 import com.object.usercenter.domain.security.model.vo.PermissionVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -34,5 +36,14 @@ public interface PermissionMapper extends BaseMapper<PermissionPO> {
      * @return 权限列表
      */
     List<PermissionVO> selectPermissionsByRoleKeys(@Param("roleKeys") List<String> roleKeys);
+
+    /**
+     * 权限分页查询
+     *
+     * @param page 分页参数
+     * @param request 查询条件
+     * @return 权限分页数据
+     */
+    IPage<PermissionVO> selectAllPermissions(IPage<PermissionVO> page, @Param("request") PermissionQueryRequest request);
 
 }

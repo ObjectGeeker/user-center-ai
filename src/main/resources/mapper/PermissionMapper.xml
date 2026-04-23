@@ -59,4 +59,21 @@
           </foreach>
     </select>
 
+    <select id="selectAllPermissions" resultMap="PermissionVOMap">
+        SELECT
+        <include refid="PermissionColumns"/>
+        FROM tb_permission p
+        WHERE p.is_delete = 0
+        <if test="request.name != null and request.name != ''">
+            AND p.name LIKE concat('%', #{request.name}, '%')
+        </if>
+        <if test="request.description != null and request.description != ''">
+            AND p.description LIKE concat('%', #{request.description}, '%')
+        </if>
+        <if test="request.permissionKey != null and request.permissionKey != ''">
+            AND p.permission_key = #{request.permissionKey}
+        </if>
+        ORDER BY p.create_time ASC
+    </select>
+
 </mapper>

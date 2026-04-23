@@ -31,7 +31,7 @@ public class CustomStpInterfaceImpl implements StpInterface {
         if (CollUtil.isEmpty(roles)) {
             return new ArrayList<>();
         }
-        List<RoleVO> existRoles = roleMapper.selectRolesWithPermissionsByNames(roles);
+        List<RoleVO> existRoles = roleMapper.selectRolesWithPermissionsByRoleKeys(roles);
         if (CollUtil.isEmpty(existRoles)) {
             return new ArrayList<>();
         }

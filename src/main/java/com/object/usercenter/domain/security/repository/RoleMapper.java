@@ -1,7 +1,9 @@
 package com.object.usercenter.domain.security.repository;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.object.usercenter.domain.security.model.po.RolePO;
+import com.object.usercenter.domain.security.model.request.RoleQueryRequest;
 import com.object.usercenter.domain.security.model.vo.RoleVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -32,7 +34,7 @@ public interface RoleMapper extends BaseMapper<RolePO> {
      *
      * @return 角色列表(含权限)
      */
-    List<RoleVO> selectAllRolesWithPermissions();
+    IPage<RoleVO> selectAllRolesWithPermissions(IPage<RoleVO> page, @Param("request") RoleQueryRequest request);
 
     /**
      * 根据角色名称查询角色详情并携带其所有权限(连表 tb_role + tb_role_permission + tb_permission)
@@ -44,11 +46,11 @@ public interface RoleMapper extends BaseMapper<RolePO> {
     List<RoleVO> selectRolesWithPermissionsByName(@Param("name") String name);
 
     /**
-     * 根据多个角色名称批量查询角色详情并携带其所有权限(连表 tb_role + tb_role_permission + tb_permission)
+     * 根据多个角色Key批量查询角色详情并携带其所有权限(连表 tb_role + tb_role_permission + tb_permission)
      *
-     * @param names 角色名称列表
+     * @param roleKeys 角色Key列表
      * @return 角色列表(含权限)
      */
-    List<RoleVO> selectRolesWithPermissionsByNames(@Param("names") List<String> names);
+    List<RoleVO> selectRolesWithPermissionsByRoleKeys(@Param("roleKeys") List<String> roleKeys);
 
 }
